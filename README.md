@@ -15,5 +15,3 @@ Define the following env variables:
 Wrap your command using the command `mailme` 
 
 Eg: `mailme sleep 70`
-
-Commands which terminate in less than 60s will not send an email to. 

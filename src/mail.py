@@ -2,7 +2,6 @@ import smtplib
 import os
 import subprocess
 import sys
-import time
 
 
 def check_setup():
@@ -77,14 +76,12 @@ def main():
 
     cmd = get_cmd()
 
-    t1 = time.time()
     output, err_msg, err_code = run_cmd(cmd)
 
     if output is not None:
         output = output.decode('UTF-8')
     if err_msg is not None:
         err_msg = err_msg.decode('UTF-8')
-    t2 = time.time()
 
     if err_code == 0:
         print('Success')
@@ -95,8 +92,7 @@ def main():
     print('Err was:')
     print(err_msg)
 
-    if t2 - t1 > 60:
-        mail_finish(host, user, password, recipient, cmd, output, err_msg, err_code)
+    mail_finish(host, user, password, recipient, cmd, output, err_msg, err_code)
 
 
 if __name__ == '__main__':
