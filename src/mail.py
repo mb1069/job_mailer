@@ -18,7 +18,7 @@ def check_setup():
         print(f"\tUser: {os.environ.get('EMAIL_USER')}")
         print(f"\tPassword: {os.environ.get('EMAIL_PASSWORD')}")
         print(f"\tRecipient: {os.environ.get('EMAIL_RECIPIENT')}")
-        return
+        quit(1)
 
 
 def get_cmd():

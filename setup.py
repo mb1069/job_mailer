@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="job-mailer",  # Replace with your own username
-    version="1.0.0",
+    version="1.0.1",
     author="Miguel d'Arcangues Boland",
     author_email="migueldboland@gmail.com",
     description="Job mailer for long running jobs on remote servers",
