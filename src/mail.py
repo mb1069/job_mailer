@@ -7,13 +7,15 @@ import sys
 def check_setup():
     try:
         host = os.environ['EMAIL_HOST']
+        port = os.environ['EMAIL_PORT']
         user = os.environ['EMAIL_USER']
         password = os.environ['EMAIL_PASSWORD']
         recipient = [os.environ['EMAIL_RECIPIENT']]
-        return host, user, password, recipient
+        return host, port, user, password, recipient
     except KeyError:
         print('Missing config: ')
         print(f"\tHost: {os.environ.get('EMAIL_HOST')}")
+        print(f"\tPort: {os.environ.get('EMAIL_PORT')}")
         print(f"\tUser: {os.environ.get('EMAIL_USER')}")
         print(f"\tPassword: {os.environ.get('EMAIL_PASSWORD')}")
         print(f"\tRecipient: {os.environ.get('EMAIL_RECIPIENT')}")
@@ -34,7 +36,7 @@ def run_cmd(cmd):
     return output, error, process.returncode
 
 
-def mail_finish(host, user, password, recipient, cmd, output, err_msg, err_code):
+def mail_finish(host, port, user, password, recipient, cmd, output, err_msg, err_code):
     '''
 
     :param host: smtp host address
@@ -64,7 +66,8 @@ def mail_finish(host, user, password, recipient, cmd, output, err_msg, err_code)
     {err_msg}
     """
 
-    with smtplib.SMTP(host) as session:
+    with smtplib.SMTP(host, port=587) as session:
+        session.set_debuglevel(1)
         # if your SMTP server doesn't need authentications,
         # you don't need the following line:
         session.login(user, password)
@@ -72,7 +75,7 @@ def mail_finish(host, user, password, recipient, cmd, output, err_msg, err_code)
 
 
 def main():
-    host, user, password, recipient = check_setup()
+    host, port, user, password, recipient = check_setup()
 
     cmd = get_cmd()
 
@@ -92,7 +95,7 @@ def main():
     print('Err was:')
     print(err_msg)
 
-    mail_finish(host, user, password, recipient, cmd, output, err_msg, err_code)
+    mail_finish(host, port, user, password, recipient, cmd, output, err_msg, err_code)
 
 
 if __name__ == '__main__':
