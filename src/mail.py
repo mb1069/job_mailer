@@ -67,9 +67,6 @@ def mail_finish(host, port, user, password, recipient, cmd, output, err_msg, err
     """
 
     with smtplib.SMTP(host, port=587) as session:
-        session.set_debuglevel(1)
-        # if your SMTP server doesn't need authentications,
-        # you don't need the following line:
         session.login(user, password)
         session.sendmail(user, recipient, message)
 
